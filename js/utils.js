@@ -9,7 +9,6 @@ for (let anylabel of labels) {
 let onscrollxx = function(){
 
 	for (let point of points) {
-		console.log(document.documentElement.scrollTop, point.offsetTop)
 		if (document.documentElement.scrollTop >= (point.offsetTop - 100) && document.documentElement.scrollTop <= (
 				point.offsetTop + point.offsetHeight - 50)) {
 			if (point.indexE.classList.contains("active") == false) {
