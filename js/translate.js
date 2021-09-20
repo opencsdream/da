@@ -1,6 +1,8 @@
 let zh_simple = {
 	"What is Xtime": "什么是 Xtime",
 	"What Is Xtime": "什么是 Xtime",
+	"About":"介绍",
+	"Our Goal":"我们的目标",
 	"Token Info": "代币信息",
 	"Exchange Info": "交易信息",
 	"Road Map": "路线图",
