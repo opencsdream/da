@@ -11,7 +11,7 @@ jQuery(document).ready(function() {
     */
     var now = new Date();
     var finaldate = new Date("NOV 10 2021 14:00 UTC ")
-    var countTo = finaldate.getTime() - now.getTime() + now.getTimezoneOffset()*60*1000  + now.valueOf();
+    var countTo = finaldate.getTime() - now.getTime()  + now.valueOf();
     $('.timer').countdown(countTo, function(event) {
         var $this = $(this);
         switch(event.type) {
