@@ -5,7 +5,12 @@ jQuery(document).ready(function() {
         Background slideshow
     */
 
-
+   var filelist = ['bg1.jpg','bg2.png','bg3.png','bg4.jpg']
+   var counterN = 1
+    setInterval(()=>{
+        counterN++
+        document.body.style.backgroundImage = "url('../img/countdown/"+ filelist[counterN%filelist.length]+"')"
+    }, 7000);
     /*
         Countdown initializer
     */
