@@ -1,7 +1,7 @@
-$(document).ready(function () {
-	/*
-		Background slideshow
-	*/
+/*
+	Background slideshow
+*/
+function intervalChangeBackground() {
 	var filelist = ["bg1.jpg", "bg2.png", "bg3.png", "bg4.jpg"];
 	var counterN = 1;
 
@@ -9,9 +9,12 @@ $(document).ready(function () {
 		counterN++;
 		document.body.style.backgroundImage = "url('../img/countdown/" + filelist[counterN % filelist.length] + "')";
 	}, 7000);
-	/*
-		Countdown initializer
-	*/
+}
+
+/*
+	Countdown initializer
+*/
+function initCountdownElements() {
 	var now = new Date();
 	var finaldate = new Date("NOV 10 2021 14:00 UTC ");
 	var countTo = finaldate.getTime() - now.getTime() + now.valueOf();
@@ -31,5 +34,4 @@ $(document).ready(function () {
 			break;
 		}
 	});
-});
-
+}

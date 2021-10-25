@@ -32,6 +32,18 @@ a:focus {
 	text-decoration: none;
 }
 
+.hide {
+	display: none;
+}
+
+.color-white {
+	color: white;
+}
+
+.color-blue {
+	color: rgb(29, 162, 231);
+}
+
 .btn.btn-custom {
 	padding: 12px 20px;
 	text-align: center;
@@ -113,7 +125,7 @@ a:focus {
 .timer .hours-wrapper:hover,
 .timer .minutes-wrapper:hover,
 .timer .seconds-wrapper:hover {
-	background: #f3bc25 url(../img/pattern-2.png);
+	background: #f3bc25 url(../../assets/img/pattern-2.png);
 	text-shadow: none;
 }
 
@@ -123,6 +135,232 @@ a:focus {
 .timer .seconds {
 	font-size: 80px;
 	line-height: 90px;
+}
+
+/***** page main *****/
+.index-container {
+	text-align: center;
+	margin-top: 80px;
+}
+
+.swap-container {
+	text-align: left;
+	margin-top: 80px;
+	padding-bottom: 450px;
+}
+
+.window {
+	width: 436px;
+	margin: 0 auto;
+	background-color: rgba(1, 1, 1, 0.6);
+	border: 2px solid rgb(29, 162, 231);
+	box-shadow: rgb(0 146 224) 0px 0px 1.5rem, rgb(0 146 224 / 70%) 0 0 1rem 0 inset;
+	border-radius: 32px;
+}
+
+.window-title {
+	border-bottom: 1px solid rgb(82, 75, 99);
+	padding: 24px 24px 10px;
+}
+
+.swap-window-title-msg {
+}
+
+.swap-window-title-msg h2 {
+	font-size: 20px;
+}
+
+.swap-window-title-msg p {
+	margin-bottom: 0;
+}
+
+.swap-window-body {
+	padding: 24px;
+}
+
+.swap-input {
+	margin: 20px auto;
+	border-radius: 16px;
+	background-color: rgba(0, 0, 0, 0.6);
+	box-shadow: rgb(74 74 104 / 10%) 0px 2px 2px -1px inset;
+}
+
+.input-label {
+	padding: 0.75rem 1rem 0;
+	color: rgb(234, 226, 252);
+	text-align: left;
+	font-weight: 400;
+	line-height: 1.5;
+	font-size: 14px;
+}
+
+.input-body {
+	padding: 0.75rem 0.75rem 0.75rem 1rem;
+}
+
+.input-body input {
+	width: 260px;
+	color: rgb(234, 226, 252);
+	font-weight: 500;
+	outline: none;
+	border: none;
+	background-color: transparent;
+	font-size: 16px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding: 0;
+}
+
+.input-body input::placeholder {
+	color: #2b6bd5;
+	font-weight: 500;
+}
+
+.input-body button {
+	align-items: center;
+	height: 34px;
+	font-size: 16px;
+	font-weight: 500;
+	background-color: transparent;
+	color: rgb(234, 226, 252);
+	border-radius: 12px;
+	outline: none;
+	cursor: pointer;
+	user-select: none;
+	border: none;
+	padding: 0 0.5rem;
+}
+
+.token-icon {
+	width: 24px;
+	height: 24px;
+	box-shadow: rgb(0 0 0 / 8%) 0px 6px 10px;
+	border-radius: 24px;
+}
+
+.swap-btn {
+	background-color: rgb(29, 162, 231);
+	align-items: center;
+	border: 0;
+	border-radius: 16px;
+	cursor: pointer;
+	font-size: 16px;
+	font-weight: 600;
+	outline: 0;
+	transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
+	height: 48px;
+	padding: 0 24px;
+	color: white;
+}
+
+.swap-btn:hover:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled):not(:active) {
+	opacity: 0.65;
+}
+
+.swap-wallet {
+	width: 100%;
+}
+
+#btn-join-poll {
+	margin: 10px 0;
+}
+
+.poll-body {
+	padding: 24px;
+}
+
+.poll-body-header {
+	color: rgb(234, 226, 252);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+}
+
+.poll-body-content {
+	width: 100%;
+	padding: 40px;
+	margin: 20px 0;
+	border: 1px solid rgb(25, 19, 38);
+	background-color: rgb(25, 19, 38);
+	border-radius: 16px;
+}
+
+.poll-body-content-detail {
+	margin-bottom: 0;
+	color: rgb(102, 97, 113);
+	font-size: 16px;
+	font-weight: 400;
+	line-height: 1.5;
+	text-align: center;
+}
+
+.poll-body-info {
+	padding: 0.5rem 0;
+	color: rgb(234, 226, 252);
+	font-weight: 400;
+	line-height: 1.5;
+	font-size: 14px;
+}
+
+.stake-title {
+	font-family: Tahoma, Verdana, Segoe, sans-serif;
+	font-size: 40px;
+	font-weight: 600;
+	text-align: center;
+	text-shadow: rgb(255 255 255) 1px 1px 10px, rgb(204 204 204) 1px 1px 10px;
+	margin-bottom: 10px;
+	margin-top: 30px;
+	color: black;
+	filter: drop-shadow(white 3px 1px 1px);
+}
+
+.stake-container {
+	display: flex;
+	justify-content: space-between;
+	width: 800px;
+	margin: 20px auto;
+	padding: 10px 20px;
+	border-radius: 30px;
+	border: 1px solid rgb(29, 162, 231);
+	position: relative;
+	bottom: 1px;
+	left: -1px;
+	min-width: 700px;
+	background-color: rgba(1, 1, 1, 0.6);
+	box-shadow: rgb(0 146 224) 0 0 1.5rem, rgb(0 146 224 / 70%) 0 0 1rem 0 inset;
+}
+
+.stake-detail-item {
+	height: 60px;
+	padding: 10px 0;
+}
+
+.stake-detail-item .coin-icon {
+	width: 40px;
+	height: 40px;
+	border: 1px solid white;
+	border-radius: 50%;
+}
+
+.detail-item-title {
+	margin: 0;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 16px;
+}
+
+.detail-item-info {
+	margin: 6px 0 0;
+	font-size: 18px;
+	font-weight: 500;
+	line-height: 18px;
+}
+
+.detail-btn {
+	font-size: 14px;
+	line-height: 40px;
+	cursor: pointer;
 }
 
 /***** Media Queries *****/

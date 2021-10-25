@@ -20,7 +20,7 @@
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:400,700'>
 	<!-- use the same version of main page -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="src/css/style.css">
 	<link href="../lib/flaticon/font/flaticon.css" rel="stylesheet">
 	<link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
 	<link href="../lib/animate/animate.min.css" rel="stylesheet">
@@ -63,40 +63,159 @@
 	<div class="container button-3">
 		<div class="carousel-btn row" style="text-align: center;">
 			<div class="col-md-4 col-4">
-				<a class="btn btn-custom">
+				<a class="btn btn-custom" id="btn-swap">
 					Swap
 				</a>
 			</div>
 			<div class="col-md-4 col-4">
-				<a class="btn btn-custom">
+				<a class="btn btn-custom" id="btn-pool">
 					Pool
 				</a>
 			</div>
 			<div class="col-md-4 col-4">
-				<a class="btn btn-custom">
+				<a class="btn btn-custom" id="btn-stake">
 					Stake
 				</a>
 			</div>
 		</div>
-		<div style="text-align: center;margin-top: 80px; " class="row show-photo">
-			<img src="../img/countdown/P1.jpg" class="col-md-3 col-sm-6">
-			<img src="../img/countdown/P2.jpg" class="col-md-3 col-sm-6">
-			<img src="../img/countdown/P3.jpg" class="col-md-3 col-sm-6">
-			<img src="../img/countdown/P4.jpg" class="col-md-3 col-sm-6">
+		<div class="index-container">
+			<div class="row show-photo">
+				<img src="../img/countdown/P1.jpg" class="col-md-3 col-sm-6">
+				<img src="../img/countdown/P2.jpg" class="col-md-3 col-sm-6">
+				<img src="../img/countdown/P3.jpg" class="col-md-3 col-sm-6">
+				<img src="../img/countdown/P4.jpg" class="col-md-3 col-sm-6">
+			</div>
+			<div style="margin-top: 80px" class="row">
+				<video controls="controls" class="col col-md-10 offset-md-1" loop="loop">
+					<source src="../img/countdown/v1.mp4" type="video/mp4" />
+				</video>
+			</div>
+			<div style="height: 100px;"></div>
 		</div>
-		<div style="text-align: center; margin-top: 80px;" class="row">
-			<video controls="controls" class="col col-md-10 offset-md-1" loop="loop">
-				<source src="../img/countdown/v1.mp4" type="video/mp4" />
-			</video>
+		<div class="swap-container hide">
+			<div class="window" id="swap-window">
+				<div class="window-title">
+					<div class="swap-window-title-msg">
+						<h2>Exchange</h2>
+						<p>Trade tokens in an instant</p>
+					</div>
+				</div>
+				<div class="swap-window-body">
+					<div class="swap-input">
+						<p class="input-label">From</p>
+						<div class="input-body">
+							<input class="token-amount-input" inputmode="decimal" autocorrect="off" type="text" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0" minlength="1" maxlength="79" >
+							<button class="open-currency-select-button">
+								<img class="token-icon" src="assets/icon/bnb.png">
+								BNB
+							</button>
+						</div>
+					</div>
+					<div class="swap-input">
+						<p class="input-label">To</p>
+						<div class="input-body">
+							<input class="token-amount-input" inputmode="decimal" autocorrect="off" type="text" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0" minlength="1" maxlength="79" >
+							<button class="open-currency-select-button">
+								<img class="token-icon" src="assets/icon/bnb.png">
+								XTime
+							</button>
+						</div>
+					</div>
+					<button class="swap-btn swap-wallet">Connect Wallet</button>
+				</div>
+			</div>
+			<div class="window" id="pool-window">
+				<div class="window-title">
+					<div class="swap-window-title-msg">
+						<h2>Liquidity</h2>
+						<p>Add liquidity to receive LP tokens</p>
+					</div>
+					<button class="swap-btn" id="btn-join-poll">+ New Position</button>
+				</div>
+				<div class="poll-body">
+					<div>
+						<span class="poll-body-header">Your Liquidity</span>
+					</div>
+					<div class="poll-body-content">
+						<p class="poll-body-content-detail">Connect to a wallet to view your liquidity.</p>
+					</div>
+					<div>
+						<span class="poll-body-info">If you staked your LP tokens, unstake them to see them here.</span>
+					</div>
+				</div>
+			</div>
+			<div id="stake-window">
+				<div class="stake-title">XTime FARMS</div>
+				<div class="stake-container">
+					<div class="stake-detail-item">
+						<img class="coin-icon" src="assets/icon/bnb.png">
+						<img class="coin-icon" src="assets/icon/bnb.png">
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">XTime-BNB</p>
+						<p class="detail-item-info color-blue">Earn BNB</p>
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">XTime Earned</p>
+						<p class="detail-item-info color-blue">Loading...</p>
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">APR</p>
+						<p class="detail-item-info color-white">1,603.48%</p>
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">Total Staked</p>
+						<p class="detail-item-info color-white">483,929.00 USD</p>
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">XTime-BNB</p>
+						<p class="detail-item-info color-blue">Earn BNB</p>
+					</div>
+					<div class="stake-detail-item detail-btn">
+						Details
+					</div>
+				</div>
+				<div class="stake-container">
+					<div class="stake-detail-item">
+						<img class="coin-icon" src="assets/icon/bnb.png">
+						<img class="coin-icon" src="assets/icon/bnb.png">
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">XTime-BNB</p>
+						<p class="detail-item-info color-blue">Earn BNB</p>
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">XTime Earned</p>
+						<p class="detail-item-info color-blue">Loading...</p>
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">APR</p>
+						<p class="detail-item-info color-white">1,603.48%</p>
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">Total Staked</p>
+						<p class="detail-item-info color-white">483,929.00 USD</p>
+					</div>
+					<div class="stake-detail-item">
+						<p class="detail-item-title color-white">XTime-BNB</p>
+						<p class="detail-item-info color-blue">Earn BNB</p>
+					</div>
+					<div class="stake-detail-item detail-btn">
+						Details
+					</div>
+				</div>
+			</div>
 		</div>
-		<div style="height: 100px;"></div>
 	</div>
 </div>
 <!-- Javascript -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
+<script src="src/lib/jquery-3.4.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="assets/js/lib/jquery.countdown.js"></script>
-<script src="assets/js/scripts.js"></script>
 <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="src/lib/jquery.countdown.js"></script>
+<script src="src/js/init.js"></script>
+<script src="src/js/swap.js"></script>
+<script src="src/js/main.js"></script>
 </body>
 </html>
