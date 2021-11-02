@@ -2,12 +2,15 @@
 /********* General CSS *********/
 /*******************************/
 body {
-	background: black url('../../../img/countdown/bg2.png') no-repeat fixed;
-	background-size: cover;
 	text-align: left;
 	color: #777777;
 	font-weight: 500;
 	font-family: 'Quicksand', sans-serif;
+}
+
+#app {
+	background: black url('../../../img/countdown/bg2.png') no-repeat fixed;
+	background-size: cover;
 }
 
 h1,
@@ -42,6 +45,10 @@ a:focus {
 
 .margin-right-20 {
 	margin-right: 20px;
+}
+
+.float-right {
+	float: right;
 }
 
 .color-blue {
@@ -204,6 +211,12 @@ input[type="number"] {
 	padding: 24px 24px 10px;
 }
 
+#btn-exchange {
+	font-size: 25px;
+	cursor: pointer;
+	color: rgb(107, 11, 186);
+}
+
 .swap-window-title-icons {
 	font-size: 23px;
 }
@@ -234,6 +247,7 @@ input[type="number"] {
 }
 
 .input-label {
+	display: inline-block;
 	padding: 0.75rem 1rem 0;
 	color: rgb(234, 226, 252);
 	text-align: left;

@@ -3,4 +3,5 @@ $(document).ready(function () {
 	initCountdownElements();
 	bindBtnEvents();
 	settingPercentChange();
+	$("#btn-connect-wallet").click();
 })

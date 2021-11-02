@@ -7,7 +7,7 @@ function intervalChangeBackground() {
 
 	setInterval(() => {
 		counterN++;
-		document.body.style.backgroundImage = "url('../img/countdown/" + filelist[counterN % filelist.length] + "')";
+		document.getElementById("app").style.backgroundImage = "url('../img/countdown/" + filelist[counterN % filelist.length] + "')";
 	}, 7000);
 }
 

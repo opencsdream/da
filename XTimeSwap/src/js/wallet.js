@@ -25,12 +25,17 @@ function switchChain() {
 	})
 }
 
-connectWallet().then((web3) => {
-	console.log(web3);
-	window.web3 = web3;
-	if (web3.currentProvider.chainId !== "0x38") {
-		switchChain();
-	}
-}).catch(error => {
-	console.log(error);
-})
+function getCurrentAddress() {
+	return web3.currentProvider.selectedAddress;
+}
+
+function getBalance(address) {
+	return new Promise(async function(resolve, reject){
+		try {
+			let balance = await web3.eth.getBalance(address);
+			resolve(balance);
+		} catch (error) {
+			reject(error);
+		}
+	})
+}
