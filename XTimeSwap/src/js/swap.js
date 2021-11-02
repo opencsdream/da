@@ -19,6 +19,10 @@ function bindBtnEvents() {
 		$("#pool-window").addClass("hide");
 		$("#stake-window").removeClass("hide");
 	});
+
+	$("btn-swap-setting").click(function () {
+
+	});
 }
 
 function hidePageShowSwap() {
@@ -26,4 +30,22 @@ function hidePageShowSwap() {
 		$(".index-container").addClass("hide");
 		$(".swap-container").removeClass("hide");
 	}
+}
+
+function settingPercentChange() {
+	$("#btn-percent-10").click(function () {
+		$(".btn-percent").removeClass("active");
+		$(this).addClass("active");
+		$("#input-percent").val(10);
+	})
+	$("#btn-percent-15").click(function () {
+		$(".btn-percent").removeClass("active");
+		$(this).addClass("active");
+		$("#input-percent").val(15);
+	})
+	$("#btn-percent-25").click(function () {
+		$(".btn-percent").removeClass("active");
+		$(this).addClass("active");
+		$("#input-percent").val(25);
+	})
 }

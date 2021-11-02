@@ -40,6 +40,10 @@ a:focus {
 	color: white;
 }
 
+.margin-right-20 {
+	margin-right: 20px;
+}
+
 .color-blue {
 	color: rgb(29, 162, 231);
 }
@@ -78,6 +82,13 @@ a:focus {
 [class*=" flaticon-"]:after {
 	font-size: inherit;
 	margin-left: 0;
+}
+
+#alert {
+	position: fixed;
+	z-index: 2;
+	right: 20px;
+	top: 30px;
 }
 
 /***** Coming Soon *****/
@@ -137,6 +148,33 @@ a:focus {
 	line-height: 90px;
 }
 
+.modal-content {
+	background-color: rgb(39, 38, 44);
+	color: white;
+	border-radius: 30px;
+}
+
+.modal-content h5 {
+	color: white;
+}
+
+.modal-header .close {
+	color: white;
+}
+
+.modal-header {
+	border-bottom: 1px solid rgb(82, 75, 99)
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	-webkit-appearance: none;
+}
+
+input[type="number"] {
+	-moz-appearance: textfield;
+}
+
 /***** page main *****/
 .index-container {
 	text-align: center;
@@ -159,14 +197,24 @@ a:focus {
 }
 
 .window-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 	border-bottom: 1px solid rgb(82, 75, 99);
 	padding: 24px 24px 10px;
 }
 
-.swap-window-title-msg {
+.swap-window-title-icons {
+	font-size: 23px;
+}
+
+.swap-window-title-icons i {
+	cursor: pointer;
+	color: rgb(107, 11, 186);
 }
 
 .swap-window-title-msg h2 {
+	color: white;
 	font-size: 20px;
 }
 
@@ -361,6 +409,59 @@ a:focus {
 	font-size: 14px;
 	line-height: 40px;
 	cursor: pointer;
+}
+
+.form-item label {
+	color: rgb(234, 226, 252);
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.5
+}
+
+.form-item .btn-percent {
+	align-items: center;
+	border: 0;
+	border-radius: 16px;
+	box-shadow: rgb(14 14 44 / 40%) 0px -1px 0px 0px inset;
+	background-color: rgb(53, 53, 71);
+	cursor: pointer;
+	display: inline-flex;
+	font-family: inherit;
+	font-size: 16px;
+	font-weight: 600;
+	-webkit-box-pack: center;
+	justify-content: center;
+	letter-spacing: 0.03em;
+	line-height: 1;
+	opacity: 1;
+	outline: 0;
+	transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
+	height: 48px;
+	padding: 0 24px;
+	color: white;
+}
+
+.form-item .btn-percent.active {
+	background-color: rgb(29, 162, 231);
+}
+
+.form-item .input-percent {
+	background-color: rgb(72, 63, 90);
+	border: 0;
+	border-radius: 16px;
+	box-shadow: rgb(74 74 104 / 10%) 0px 2px 2px -1px inset;
+	color: rgb(234, 226, 252);
+	display: inline-block;
+	font-size: 16px;
+	height: 48px;
+	outline: 0;
+	padding: 0 16px;
+	width: 170px;
+	margin-right: 10px;
+}
+
+.form-item .input-percent:focus:not(:disabled) {
+	box-shadow: rgb(118 69 217) 0px 0px 0px 1px, rgb(118 69 217 / 60%) 0px 0px 0px 4px;
 }
 
 /***** Media Queries *****/

@@ -35,3 +35,8 @@ function initCountdownElements() {
 		}
 	});
 }
+
+function showAlert() {
+	$("#alert").alert();
+	$("#alert").removeClass("hide");
+}

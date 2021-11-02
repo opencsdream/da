@@ -20,6 +20,7 @@
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Lato:400,700'>
 	<!-- use the same version of main page -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="src/css/style.css">
 	<link href="../lib/flaticon/font/flaticon.css" rel="stylesheet">
 	<link href="../lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -27,6 +28,14 @@
 </head>
 
 <body>
+
+<div class="alert alert-warning alert-dismissible fade show hide" role="alert" id="alert">
+	<strong>Need MetaMask!</strong> You should install the metamask wallet
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+
 <div style="width: 100%; background:rgba(0, 0, 0, 0.5);">
 	<!-- Coming Soon -->
 	<div class="coming-soon">
@@ -99,6 +108,10 @@
 						<h2>Exchange</h2>
 						<p>Trade tokens in an instant</p>
 					</div>
+					<div class="swap-window-title-icons">
+						<i class="bi-gear" id="btn-swap-setting" data-toggle="modal" data-target="#setting"></i>
+						<i class="bi-clock" id="btn-swap-history"></i>
+					</div>
 				</div>
 				<div class="swap-window-body">
 					<div class="swap-input">
@@ -116,7 +129,7 @@
 						<div class="input-body">
 							<input class="token-amount-input" inputmode="decimal" autocorrect="off" type="text" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0" minlength="1" maxlength="79" >
 							<button class="open-currency-select-button">
-								<img class="token-icon" src="assets/icon/bnb.png">
+								<img class="token-icon" src="assets/icon/xtime.png">
 								XTime
 							</button>
 						</div>
@@ -129,8 +142,12 @@
 					<div class="swap-window-title-msg">
 						<h2>Liquidity</h2>
 						<p>Add liquidity to receive LP tokens</p>
+						<button class="swap-btn" id="btn-join-poll">+ New Position</button>
 					</div>
-					<button class="swap-btn" id="btn-join-poll">+ New Position</button>
+					<div class="swap-window-title-icons">
+						<i class="bi-gear" id="btn-pool-setting"></i>
+						<i class="bi-clock" id="btn-poll-history"></i>
+					</div>
 				</div>
 				<div class="poll-body">
 					<div>
@@ -148,28 +165,24 @@
 				<div class="stake-title">XTime FARMS</div>
 				<div class="stake-container">
 					<div class="stake-detail-item">
-						<img class="coin-icon" src="assets/icon/bnb.png">
+						<img class="coin-icon" src="assets/icon/xtime.png">
 						<img class="coin-icon" src="assets/icon/bnb.png">
 					</div>
 					<div class="stake-detail-item">
 						<p class="detail-item-title color-white">XTime-BNB</p>
-						<p class="detail-item-info color-blue">Earn BNB</p>
+						<p class="detail-item-info color-blue">Earn BTC</p>
 					</div>
 					<div class="stake-detail-item">
-						<p class="detail-item-title color-white">XTime Earned</p>
+						<p class="detail-item-title color-white">BTC Earned</p>
 						<p class="detail-item-info color-blue">Loading...</p>
 					</div>
 					<div class="stake-detail-item">
 						<p class="detail-item-title color-white">APR</p>
-						<p class="detail-item-info color-white">1,603.48%</p>
+						<p class="detail-item-info color-white">150.00%</p>
 					</div>
 					<div class="stake-detail-item">
 						<p class="detail-item-title color-white">Total Staked</p>
 						<p class="detail-item-info color-white">483,929.00 USD</p>
-					</div>
-					<div class="stake-detail-item">
-						<p class="detail-item-title color-white">XTime-BNB</p>
-						<p class="detail-item-info color-blue">Earn BNB</p>
 					</div>
 					<div class="stake-detail-item detail-btn">
 						Details
@@ -177,31 +190,56 @@
 				</div>
 				<div class="stake-container">
 					<div class="stake-detail-item">
-						<img class="coin-icon" src="assets/icon/bnb.png">
-						<img class="coin-icon" src="assets/icon/bnb.png">
+						<img class="coin-icon" src="assets/icon/xtime.png">
 					</div>
 					<div class="stake-detail-item">
-						<p class="detail-item-title color-white">XTime-BNB</p>
-						<p class="detail-item-info color-blue">Earn BNB</p>
+						<p class="detail-item-title color-white">XTime</p>
+						<p class="detail-item-info color-blue">Earn BTC</p>
 					</div>
 					<div class="stake-detail-item">
-						<p class="detail-item-title color-white">XTime Earned</p>
+						<p class="detail-item-title color-white">BTC Earned</p>
 						<p class="detail-item-info color-blue">Loading...</p>
 					</div>
 					<div class="stake-detail-item">
 						<p class="detail-item-title color-white">APR</p>
-						<p class="detail-item-info color-white">1,603.48%</p>
+						<p class="detail-item-info color-white">150.00%</p>
 					</div>
 					<div class="stake-detail-item">
 						<p class="detail-item-title color-white">Total Staked</p>
 						<p class="detail-item-info color-white">483,929.00 USD</p>
 					</div>
-					<div class="stake-detail-item">
-						<p class="detail-item-title color-white">XTime-BNB</p>
-						<p class="detail-item-info color-blue">Earn BNB</p>
-					</div>
 					<div class="stake-detail-item detail-btn">
 						Details
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="setting" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Settings</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<div class="form-item">
+						<label>Slippage tolerance</label>
+						<div>
+							<button class="btn-percent" id="btn-percent-10">10%</button>
+							<button class="btn-percent" id="btn-percent-15">15%</button>
+							<button class="btn-percent margin-right-20" id="btn-percent-25">25%</button>
+							<input class="input-percent" id="input-percent" type="number" step="0.1" min="0.1" placeholder="5%">%
+						</div>
+					</div>
+					<div class="form-item">
+						<label>Transaction deadline</label>
+						<div>
+							<input class="input-percent" type="number" step="0.1" min="0.1" placeholder="5%">Minutes
+						</div>
 					</div>
 				</div>
 			</div>
@@ -214,7 +252,9 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
 <script src="../lib/owlcarousel/owl.carousel.min.js"></script>
 <script src="src/lib/jquery.countdown.js"></script>
+<script src="src/lib/web3.min.js"></script>
 <script src="src/js/init.js"></script>
+<script src="src/js/wallet.js"></script>
 <script src="src/js/swap.js"></script>
 <script src="src/js/main.js"></script>
 </body>
