@@ -60,6 +60,22 @@ function bindBtnEvents() {
 			console.log(error);
 		})
 	});
+
+
+	// change the swap from value
+	$("#input-swap-from").on("input", function (e) {
+		checkSwapInputValue();
+	})
+
+
+	$("#input-swap-to").on("input", function (e) {
+		checkSwapInputValue();
+	})
+}
+
+function checkSwapInputValue() {
+	$("#btn-confirm-swap").attr("disabled",true);
+	$("#btn-confirm-swap").html("Insufficient BNB balance");
 }
 
 function connectWalletSuccess() {

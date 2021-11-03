@@ -301,31 +301,49 @@ input[type="number"] {
 	border-radius: 24px;
 }
 
-.swap-btn {
-	background-color: rgb(29, 162, 231);
-	align-items: center;
-	border: 0;
-	border-radius: 16px;
-	cursor: pointer;
-	font-size: 16px;
-	font-weight: 600;
-	outline: 0;
-	transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s;
-	height: 48px;
-	padding: 0 24px;
-	color: white;
-}
-
-.swap-btn:hover:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled):not(:active) {
-	opacity: 0.65;
-}
-
 .swap-wallet {
+	border-radius: 16px;
 	width: 100%;
 }
 
 #btn-join-poll {
+	border-radius: 16px;
 	margin: 10px 0;
+}
+
+.swap-notes {
+	width: 400px;
+	margin: 20px auto;
+	padding: 24px;
+	position: relative;
+	color: white;
+	background-color: rgb(39, 38, 44);
+	border-radius: 32px;
+	box-shadow: rgb(25 19 38 / 10%) 0px 2px 12px -8px, rgb(25 19 38 / 5%) 0px 1px 1px;
+	font-size: 14px;
+}
+
+.swap-notes-label {
+	display: inline-block;
+	margin-bottom: 5px;
+}
+
+#swap-notes-price-impact {
+	color: rgb(29, 162, 231)
+}
+
+#swap-notes-min-get,
+#swap-notes-price-impact,
+#swap-notes-fee {
+	position: absolute;
+	display: inline-block;
+	right: 24px;
+	text-align: right;
+}
+
+#history .modal-dialog {
+	max-width: 300px;
+	text-align: center;
 }
 
 .poll-body {

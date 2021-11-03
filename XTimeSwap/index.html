@@ -110,7 +110,7 @@
 						</div>
 						<div class="swap-window-title-icons">
 							<i class="bi bi-gear" id="btn-swap-setting" data-toggle="modal" data-target="#setting"></i>
-							<i class="bi bi-clock" id="btn-swap-history"></i>
+							<i class="bi bi-clock" id="btn-swap-history" data-toggle="modal" data-target="#history"></i>
 						</div>
 					</div>
 					<div class="swap-window-body">
@@ -118,8 +118,9 @@
 							<p class="input-label">From</p>
 							<p class="input-label float-right hide" id="label-balance"></p>
 							<div class="input-body">
-								<input class="token-amount-input" inputmode="decimal" autocorrect="off" type="text"
-									   pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0" minlength="1" maxlength="79">
+								<input class="token-amount-input" id="input-swap-from" inputmode="decimal"
+									   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+									   minlength="1" maxlength="79">
 								<button class="open-currency-select-button" id="btn-swap-from">
 									<img class="token-icon" src="assets/icon/bnb.png">
 									BNB
@@ -132,16 +133,18 @@
 						<div class="swap-input">
 							<p class="input-label">To</p>
 							<div class="input-body">
-								<input class="token-amount-input" inputmode="decimal" autocorrect="off" type="text"
-									   pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0" minlength="1" maxlength="79">
+								<input class="token-amount-input" id="input-swap-to" inputmode="decimal"
+									   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+									   minlength="1" maxlength="79">
 								<button class="open-currency-select-button" id="btn-swap-to">
 									<img class="token-icon" src="assets/icon/xtime.png">
 									XTime
 								</button>
 							</div>
 						</div>
-						<button class="swap-btn swap-wallet" id="btn-connect-wallet">Connect Wallet</button>
-						<button class="swap-btn swap-wallet hide" id="btn-confirm-swap">Swap</button>
+						<button class="btn btn-lg btn-primary swap-wallet" id="btn-connect-wallet">Connect Wallet
+						</button>
+						<button class="btn btn-lg btn-primary swap-wallet hide" id="btn-confirm-swap">Swap</button>
 					</div>
 				</div>
 				<div class="window" id="pool-window">
@@ -149,7 +152,7 @@
 						<div class="swap-window-title-msg">
 							<h2>Liquidity</h2>
 							<p>Add liquidity to receive LP tokens</p>
-							<button class="swap-btn" id="btn-join-poll">+ New Position</button>
+							<button class="btn btn-lg btn-primary" id="btn-join-poll">+ New Position</button>
 						</div>
 						<div class="swap-window-title-icons">
 							<i class="bi bi-gear" id="btn-pool-setting"></i>
@@ -220,15 +223,30 @@
 						</div>
 					</div>
 				</div>
+				<div class="swap-notes">
+					<div>
+						<p class="swap-notes-label">Minimum received</p>
+						<p id="swap-notes-min-get">0.455555 XTime</p>
+					</div>
+					<div>
+						<p class="swap-notes-label">Price Impact</p>
+						<p id="swap-notes-price-impact"><0.6%</p>
+					</div>
+					<div>
+						<p class="swap-notes-label">Liquidity Provider Fee</p>
+						<p id="swap-notes-fee">0.555 BNB</p>
+					</div>
+
+				</div>
 			</div>
 		</div>
 
-		<div class="modal fade" id="setting" data-backdrop="static" data-keyboard="false" tabindex="-1"
+		<div class="modal" id="setting" data-backdrop="static" data-keyboard="false" tabindex="-1"
 			 aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
-						<h5 class="modal-title" id="staticBackdropLabel">Settings</h5>
+						<h5 class="modal-title">Settings</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
@@ -254,18 +272,32 @@
 				</div>
 			</div>
 		</div>
+		<div class="modal" id="history" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog modal-dialog-centered">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Recent transactions</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						No recent transactions
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-</div>
-<!-- Javascript -->
-<!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
-<script src="src/lib/jquery-3.4.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-<script src="../lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="src/lib/jquery.countdown.js"></script>
-<script src="src/lib/web3.min.js"></script>
-<script src="src/js/init.js"></script>
-<script src="src/js/wallet.js"></script>
-<script src="src/js/swap.js"></script>
-<script src="src/js/main.js"></script>
+	<!-- Javascript -->
+	<!--<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>-->
+	<script src="src/lib/jquery-3.4.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+	<script src="../lib/owlcarousel/owl.carousel.min.js"></script>
+	<script src="src/lib/jquery.countdown.js"></script>
+	<script src="src/lib/web3.min.js"></script>
+	<script src="src/js/init.js"></script>
+	<script src="src/js/wallet.js"></script>
+	<script src="src/js/swap.js"></script>
+	<script src="src/js/main.js"></script>
 </body>
 </html>
