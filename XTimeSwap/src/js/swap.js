@@ -27,6 +27,17 @@ function bindBtnEvents() {
 	});
 
 
+	// add Liquidity
+	$("#btn-join-poll").click(function () {
+		$("#window-body-poll-liquidity").addClass("hide")
+		$("#window-body-poll-add").removeClass("hide")
+	})
+
+	// from add liquidity back
+	$("#btn-poll-add-back").click(function () {
+		$("#window-body-poll-liquidity").removeClass("hide")
+		$("#window-body-poll-add").addClass("hide")
+	})
 	// exchange swap coin from to
 	$("#btn-exchange").click(function () {
 		switch (SWAP_WAY){
@@ -70,6 +81,15 @@ function bindBtnEvents() {
 
 	$("#input-swap-to").on("input", function (e) {
 		checkSwapInputValue();
+	})
+
+	$(".stake-container").on("click", "div.detail-btn", function (e) {
+		let parent = $($(this).parents(".stake-container")[0]);
+		if (parent.hasClass("open")){
+			parent.removeClass("open")
+		} else {
+			parent.addClass("open")
+		}
 	})
 }
 

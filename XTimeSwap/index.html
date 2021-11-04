@@ -103,140 +103,203 @@
 			</div>
 			<div class="swap-container hide">
 				<div class="window" id="swap-window">
-					<div class="window-title">
-						<div class="swap-window-title-msg">
-							<h2>Exchange</h2>
-							<p>Trade tokens in an instant</p>
+					<div class="window-body">
+						<div class="window-title">
+							<div class="swap-window-title-msg">
+								<h2>Exchange</h2>
+								<p>Trade tokens in an instant</p>
+							</div>
+							<div class="swap-window-title-icons">
+								<i class="bi bi-gear" id="btn-swap-setting" data-toggle="modal" data-target="#setting"></i>
+								<i class="bi bi-clock" id="btn-swap-history" data-toggle="modal" data-target="#history"></i>
+							</div>
 						</div>
-						<div class="swap-window-title-icons">
-							<i class="bi bi-gear" id="btn-swap-setting" data-toggle="modal" data-target="#setting"></i>
-							<i class="bi bi-clock" id="btn-swap-history" data-toggle="modal" data-target="#history"></i>
+						<div class="swap-window-body">
+							<div class="swap-input">
+								<p class="input-label">From</p>
+								<p class="input-label float-right hide" id="label-balance"></p>
+								<div class="input-body">
+									<input class="token-amount-input" id="input-swap-from" inputmode="decimal"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+										   minlength="1" maxlength="79">
+									<button class="open-currency-select-button" id="btn-swap-from">
+										<img class="token-icon" src="assets/icon/bnb.png">
+										BNB
+									</button>
+								</div>
+							</div>
+							<div style="text-align: center">
+								<i class="bi bi-arrow-down-circle" id="btn-exchange"></i>
+							</div>
+							<div class="swap-input">
+								<p class="input-label">To</p>
+								<div class="input-body">
+									<input class="token-amount-input" id="input-swap-to" inputmode="decimal"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+										   minlength="1" maxlength="79">
+									<button class="open-currency-select-button" id="btn-swap-to">
+										<img class="token-icon" src="assets/icon/xtime.png">
+										XTime
+									</button>
+								</div>
+							</div>
+							<button class="btn btn-lg btn-primary swap-wallet" id="btn-connect-wallet">Connect Wallet
+							</button>
+							<button class="btn btn-lg btn-primary swap-wallet hide" id="btn-confirm-swap">Swap</button>
 						</div>
 					</div>
-					<div class="swap-window-body">
-						<div class="swap-input">
-							<p class="input-label">From</p>
-							<p class="input-label float-right hide" id="label-balance"></p>
-							<div class="input-body">
-								<input class="token-amount-input" id="input-swap-from" inputmode="decimal"
-									   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
-									   minlength="1" maxlength="79">
-								<button class="open-currency-select-button" id="btn-swap-from">
-									<img class="token-icon" src="assets/icon/bnb.png">
-									BNB
-								</button>
-							</div>
+					<div class="swap-notes">
+						<div>
+							<p class="swap-notes-label">Minimum received</p>
+							<p id="swap-notes-min-get">0.455555 XTime</p>
 						</div>
-						<div style="text-align: center">
-							<i class="bi bi-arrow-down-circle" id="btn-exchange"></i>
+						<div>
+							<p class="swap-notes-label">Price Impact</p>
+							<p id="swap-notes-price-impact"><0.6%</p>
 						</div>
-						<div class="swap-input">
-							<p class="input-label">To</p>
-							<div class="input-body">
-								<input class="token-amount-input" id="input-swap-to" inputmode="decimal"
-									   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
-									   minlength="1" maxlength="79">
-								<button class="open-currency-select-button" id="btn-swap-to">
-									<img class="token-icon" src="assets/icon/xtime.png">
-									XTime
-								</button>
-							</div>
+						<div>
+							<p class="swap-notes-label">Liquidity Provider Fee</p>
+							<p id="swap-notes-fee">0.555 BNB</p>
 						</div>
-						<button class="btn btn-lg btn-primary swap-wallet" id="btn-connect-wallet">Connect Wallet
-						</button>
-						<button class="btn btn-lg btn-primary swap-wallet hide" id="btn-confirm-swap">Swap</button>
+
 					</div>
 				</div>
 				<div class="window" id="pool-window">
-					<div class="window-title">
-						<div class="swap-window-title-msg">
-							<h2>Liquidity</h2>
-							<p>Add liquidity to receive LP tokens</p>
-							<button class="btn btn-lg btn-primary" id="btn-join-poll">+ New Position</button>
+					<div class="window-body" id="window-body-poll-liquidity">
+						<div class="window-title">
+							<div class="swap-window-title-msg">
+								<h2>Liquidity</h2>
+								<p>Add liquidity to receive LP tokens</p>
+								<button class="btn btn-lg btn-primary" id="btn-join-poll">+ New Position</button>
+							</div>
+							<div class="swap-window-title-icons">
+								<i class="bi bi-gear" id="btn-pool-setting" data-toggle="modal" data-target="#setting"></i>
+								<i class="bi bi-clock" id="btn-poll-history" data-toggle="modal" data-target="#history"></i>
+							</div>
 						</div>
-						<div class="swap-window-title-icons">
-							<i class="bi bi-gear" id="btn-pool-setting"></i>
-							<i class="bi bi-clock" id="btn-poll-history"></i>
+						<div class="poll-body">
+							<div>
+								<span class="poll-body-header">Your Liquidity</span>
+							</div>
+							<div class="poll-body-content">
+								<p class="poll-body-content-detail">Connect to a wallet to view your liquidity.</p>
+							</div>
+							<div>
+								<span class="poll-body-info">If you staked your LP tokens, unstake them to see them here.</span>
+							</div>
 						</div>
 					</div>
-					<div class="poll-body">
-						<div>
-							<span class="poll-body-header">Your Liquidity</span>
-						</div>
-						<div class="poll-body-content">
-							<p class="poll-body-content-detail">Connect to a wallet to view your liquidity.</p>
-						</div>
-						<div>
-							<span class="poll-body-info">If you staked your LP tokens, unstake them to see them here.</span>
+					<div class="window-body hide" id="window-body-poll-add">
+						<div class="poll-add">
+							<div class="poll-add-title">
+								<i class="bi bi-arrow-left" id="btn-poll-add-back"></i>
+								<p>
+									Add Liquidity
+								</p>
+							</div>
+							<div class="swap-input">
+								<p class="input-label">Input</p>
+								<p class="input-label float-right hide" id="label-poll-balance-first"></p>
+								<div class="input-body">
+									<input class="token-amount-input" id="input-poll-first" inputmode="decimal"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+										   minlength="1" maxlength="79">
+									<button class="open-currency-select-button">
+										<img class="token-icon" src="assets/icon/bnb.png">
+										BNB
+									</button>
+								</div>
+							</div>
+							<div class="swap-input">
+								<p class="input-label">Input</p>
+								<div class="input-body">
+									<input class="token-amount-input" id="input-poll-second" inputmode="decimal"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+										   minlength="1" maxlength="79">
+									<button class="open-currency-select-button">
+										<img class="token-icon" src="assets/icon/xtime.png">
+										XTime
+									</button>
+								</div>
+							</div>
+							<button class="btn btn-lg btn-primary swap-wallet" id="btn-poll-connect-wallet">Connect Wallet
+							</button>
+							<button class="btn btn-lg btn-primary swap-wallet hide" id="btn-poll-confirm-supply">Supply</button>
 						</div>
 					</div>
 				</div>
 				<div id="stake-window">
 					<div class="stake-title">XTime FARMS</div>
 					<div class="stake-container">
-						<div class="stake-detail-item">
-							<img class="coin-icon" src="assets/icon/xtime.png">
-							<img class="coin-icon" src="assets/icon/bnb.png">
+						<div class="stake-detail">
+							<div class="stake-detail-item">
+								<img class="coin-icon" src="assets/icon/xtime.png">
+								<img class="coin-icon" src="assets/icon/bnb.png">
+							</div>
+							<div class="stake-detail-item">
+								<p class="detail-item-title color-white">XTime-BNB</p>
+								<p class="detail-item-info color-blue">Earn BTC</p>
+							</div>
+							<div class="stake-detail-item">
+								<p class="detail-item-title color-white">BTC Earned</p>
+								<p class="detail-item-info color-blue">Loading...</p>
+							</div>
+							<div class="stake-detail-item">
+								<p class="detail-item-title color-white">APR</p>
+								<p class="detail-item-info color-white">150.00%</p>
+							</div>
+							<div class="stake-detail-item">
+								<p class="detail-item-title color-white">Total Staked</p>
+								<p class="detail-item-info color-white">483,929.00 USD</p>
+							</div>
+							<div class="stake-detail-item detail-btn">
+								Details
+							</div>
 						</div>
-						<div class="stake-detail-item">
-							<p class="detail-item-title color-white">XTime-BNB</p>
-							<p class="detail-item-info color-blue">Earn BTC</p>
-						</div>
-						<div class="stake-detail-item">
-							<p class="detail-item-title color-white">BTC Earned</p>
-							<p class="detail-item-info color-blue">Loading...</p>
-						</div>
-						<div class="stake-detail-item">
-							<p class="detail-item-title color-white">APR</p>
-							<p class="detail-item-info color-white">150.00%</p>
-						</div>
-						<div class="stake-detail-item">
-							<p class="detail-item-title color-white">Total Staked</p>
-							<p class="detail-item-info color-white">483,929.00 USD</p>
-						</div>
-						<div class="stake-detail-item detail-btn">
-							Details
+						<div class="stake-detail-info">
+							<div class="stake-detail-info-item">
+								<div>
+									<p class="stake-earned-label">GHC Earned:</p>
+									<p id="stake-earned-result">0</p>
+									<p id="stake-earned-money">0.00~ USD</p>
+								</div>
+								<button class="btn btn-primary btn-sm">Harvest</button>
+							</div>
+							<div class="stake-detail-info-item">
+								<div>
+									<p class="stake-staked-label">GHC-BNB Staked</p>
+									<p id="stake-staked-result">0</p>
+								</div>
+								<button class="btn btn-primary btn-sm">Enable</button>
+							</div>
 						</div>
 					</div>
 					<div class="stake-container">
-						<div class="stake-detail-item">
-							<img class="coin-icon" src="assets/icon/xtime.png">
-						</div>
-						<div class="stake-detail-item">
-							<p class="detail-item-title color-white">XTime</p>
-							<p class="detail-item-info color-blue">Earn BTC</p>
-						</div>
-						<div class="stake-detail-item">
-							<p class="detail-item-title color-white">BTC Earned</p>
-							<p class="detail-item-info color-blue">Loading...</p>
-						</div>
-						<div class="stake-detail-item">
-							<p class="detail-item-title color-white">APR</p>
-							<p class="detail-item-info color-white">150.00%</p>
-						</div>
-						<div class="stake-detail-item">
-							<p class="detail-item-title color-white">Total Staked</p>
-							<p class="detail-item-info color-white">483,929.00 USD</p>
-						</div>
-						<div class="stake-detail-item detail-btn">
-							Details
+						<div class="stake-detail">
+							<div class="stake-detail-item">
+								<img class="coin-icon" src="assets/icon/xtime.png">
+							</div>
+							<div class="stake-detail-item">
+								<p class="detail-item-title color-white">XTime</p>
+								<p class="detail-item-info color-blue">Earn BTC</p>
+							</div>
+							<div class="stake-detail-item">
+								<p class="detail-item-title color-white">BTC Earned</p>
+								<p class="detail-item-info color-blue">Loading...</p>
+							</div>
+							<div class="stake-detail-item">
+								<p class="detail-item-title color-white">APR</p>
+								<p class="detail-item-info color-white">150.00%</p>
+							</div>
+							<div class="stake-detail-item">
+								<p class="detail-item-title color-white">Total Staked</p>
+								<p class="detail-item-info color-white">483,929.00 USD</p>
+							</div>
+							<div class="stake-detail-item detail-btn">
+								Details
+							</div>
 						</div>
 					</div>
-				</div>
-				<div class="swap-notes">
-					<div>
-						<p class="swap-notes-label">Minimum received</p>
-						<p id="swap-notes-min-get">0.455555 XTime</p>
-					</div>
-					<div>
-						<p class="swap-notes-label">Price Impact</p>
-						<p id="swap-notes-price-impact"><0.6%</p>
-					</div>
-					<div>
-						<p class="swap-notes-label">Liquidity Provider Fee</p>
-						<p id="swap-notes-fee">0.555 BNB</p>
-					</div>
-
 				</div>
 			</div>
 		</div>

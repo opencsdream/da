@@ -197,10 +197,13 @@ input[type="number"] {
 .window {
 	width: 436px;
 	margin: 0 auto;
-	background-color: rgba(1, 1, 1, 0.6);
+}
+
+.window-body {
+	border-radius: 32px;
 	border: 2px solid rgb(29, 162, 231);
 	box-shadow: rgb(0 146 224) 0px 0px 1.5rem, rgb(0 146 224 / 70%) 0 0 1rem 0 inset;
-	border-radius: 32px;
+	background-color: rgba(1, 1, 1, 0.6);
 }
 
 .window-title {
@@ -350,6 +353,27 @@ input[type="number"] {
 	padding: 24px;
 }
 
+.poll-add {
+	padding: 24px;
+}
+
+.poll-add-title {
+	text-align: center;
+}
+
+.poll-add-title i {
+	float: left;
+	font-size: 24px;
+	color: rgb(107, 11, 186);
+	cursor: pointer;
+}
+
+.poll-add-title p {
+	color: white;
+	display: inline-block;
+	font-size: 20px;
+}
+
 .poll-body-header {
 	color: rgb(234, 226, 252);
 	font-size: 16px;
@@ -396,10 +420,21 @@ input[type="number"] {
 }
 
 .stake-container {
+	width: 800px;
+	border: 0 solid darkgrey;
+	margin: 0 auto 20px;
+	border-radius: 30px;
+}
+
+.stake-container.open {
+	border: 1px solid darkgrey;
+}
+
+.stake-detail {
 	display: flex;
 	justify-content: space-between;
 	width: 800px;
-	margin: 20px auto;
+	margin: 0 auto;
 	padding: 10px 20px;
 	border-radius: 30px;
 	border: 1px solid rgb(29, 162, 231);
@@ -441,6 +476,59 @@ input[type="number"] {
 	font-size: 14px;
 	line-height: 40px;
 	cursor: pointer;
+}
+
+.stake-detail-info {
+	display: none;
+	justify-content: space-between;
+	width: 530px;
+	margin: 10px auto;
+}
+
+.stake-container.open .stake-detail-info {
+	display: flex;
+}
+
+.stake-detail-info-item {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 250px;
+	height: 60px;
+	padding: 0 10px;
+	color: white;
+	background-color: rgba(1, 1, 1, 0.5);
+	border-radius: 8px;
+}
+
+.stake-detail-info-item p {
+	line-height: 1em;
+}
+
+.stake-earned-label {
+	margin: 0;
+	font-size: 14px;
+}
+
+#stake-earned-result {
+	margin: 0;
+	font-size: 14px;
+	color: rgb(29, 162, 231);
+}
+
+#stake-earned-money {
+	margin: 0;
+	font-size: 10px;
+}
+
+#stake-staked-result {
+	margin: 0;
+	font-size: 14px;
+}
+
+.stake-staked-label {
+	margin: 0;
+	font-size: 10px;
 }
 
 .form-item label {
