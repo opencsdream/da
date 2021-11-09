@@ -31,10 +31,13 @@
 
 <div class="alert alert-warning alert-dismissible fade show hide" role="alert" id="alert">
 	<strong>Need MetaMask!</strong> You should install the metamask wallet
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-		<span aria-hidden="true">&times;</span>
-	</button>
 </div>
+
+<div class="alert alert-success alert-dismissible fade show hide" role="alert" id="success-info">
+	<strong id="info-success-title">Swap Success!</strong><span
+		id="info-success-body">You transaction is on the way</span>
+</div>
+
 <div id="app">
 	<div style="width: 100%; background:rgba(0, 0, 0, 0.5);">
 		<!-- Coming Soon -->
@@ -110,8 +113,10 @@
 								<p>Trade tokens in an instant</p>
 							</div>
 							<div class="swap-window-title-icons">
-								<i class="bi bi-gear" id="btn-swap-setting" data-toggle="modal" data-target="#setting"></i>
-								<i class="bi bi-clock" id="btn-swap-history" data-toggle="modal" data-target="#history"></i>
+								<i class="bi bi-gear" id="btn-swap-setting" data-toggle="modal"
+								   data-target="#setting"></i>
+								<i class="bi bi-clock" id="btn-swap-history" data-toggle="modal"
+								   data-target="#history"></i>
 							</div>
 						</div>
 						<div class="swap-window-body">
@@ -120,7 +125,8 @@
 								<p class="input-label float-right hide" id="label-balance"></p>
 								<div class="input-body">
 									<input class="token-amount-input" id="input-swap-from" inputmode="decimal"
-										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$"
+										   placeholder="0.0"
 										   minlength="1" maxlength="79">
 									<button class="open-currency-select-button" id="btn-swap-from">
 										<img class="token-icon" src="assets/icon/bnb.png">
@@ -135,7 +141,8 @@
 								<p class="input-label">To</p>
 								<div class="input-body">
 									<input class="token-amount-input" id="input-swap-to" inputmode="decimal"
-										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$"
+										   placeholder="0.0"
 										   minlength="1" maxlength="79">
 									<button class="open-currency-select-button" id="btn-swap-to">
 										<img class="token-icon" src="assets/icon/xtime.png">
@@ -148,7 +155,7 @@
 							<button class="btn btn-lg btn-primary swap-wallet hide" id="btn-confirm-swap">Swap</button>
 						</div>
 					</div>
-					<div class="swap-notes">
+					<div class="swap-notes hide">
 						<div>
 							<p class="swap-notes-label">Minimum received</p>
 							<p id="swap-notes-min-get">0.455555 XTime</p>
@@ -173,8 +180,10 @@
 								<button class="btn btn-lg btn-primary" id="btn-join-poll">+ New Position</button>
 							</div>
 							<div class="swap-window-title-icons">
-								<i class="bi bi-gear" id="btn-pool-setting" data-toggle="modal" data-target="#setting"></i>
-								<i class="bi bi-clock" id="btn-poll-history" data-toggle="modal" data-target="#history"></i>
+								<i class="bi bi-gear" id="btn-pool-setting" data-toggle="modal"
+								   data-target="#setting"></i>
+								<i class="bi bi-clock" id="btn-poll-history" data-toggle="modal"
+								   data-target="#history"></i>
 							</div>
 						</div>
 						<div class="poll-body">
@@ -202,7 +211,8 @@
 								<p class="input-label float-right hide" id="label-poll-balance-first"></p>
 								<div class="input-body">
 									<input class="token-amount-input" id="input-poll-first" inputmode="decimal"
-										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$"
+										   placeholder="0.0"
 										   minlength="1" maxlength="79">
 									<button class="open-currency-select-button">
 										<img class="token-icon" src="assets/icon/bnb.png">
@@ -214,7 +224,8 @@
 								<p class="input-label">Input</p>
 								<div class="input-body">
 									<input class="token-amount-input" id="input-poll-second" inputmode="decimal"
-										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$" placeholder="0.0"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$"
+										   placeholder="0.0"
 										   minlength="1" maxlength="79">
 									<button class="open-currency-select-button">
 										<img class="token-icon" src="assets/icon/xtime.png">
@@ -222,9 +233,12 @@
 									</button>
 								</div>
 							</div>
-							<button class="btn btn-lg btn-primary swap-wallet" id="btn-poll-connect-wallet">Connect Wallet
+							<button class="btn btn-lg btn-primary swap-wallet" id="btn-poll-connect-wallet">Connect
+								Wallet
 							</button>
-							<button class="btn btn-lg btn-primary swap-wallet hide" id="btn-poll-confirm-supply">Supply</button>
+							<button class="btn btn-lg btn-primary swap-wallet hide" id="btn-poll-confirm-supply">
+								Supply
+							</button>
 						</div>
 					</div>
 				</div>
@@ -322,20 +336,22 @@
 								<button class="btn-percent" id="btn-percent-15">15%</button>
 								<button class="btn-percent margin-right-20" id="btn-percent-25">25%</button>
 								<input class="input-percent" id="input-percent" type="number" step="0.1" min="0.1"
-									   placeholder="5%">%
+									   placeholder="20">%
 							</div>
 						</div>
 						<div class="form-item">
 							<label>Transaction deadline</label>
 							<div>
-								<input class="input-percent" type="number" step="0.1" min="0.1" placeholder="5%">Minutes
+								<input class="input-percent" id="input-deadline" type="number" step="0.1" min="0.1"
+									   placeholder="20">Minutes
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<div class="modal" id="history" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal" id="history" data-backdrop="static" data-keyboard="false" tabindex="-1"
+			 aria-labelledby="staticBackdropLabel" aria-hidden="true">
 			<div class="modal-dialog modal-dialog-centered">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -358,9 +374,13 @@
 	<script src="../lib/owlcarousel/owl.carousel.min.js"></script>
 	<script src="src/lib/jquery.countdown.js"></script>
 	<script src="src/lib/web3.min.js"></script>
+	<script src="src/abi/IUniswapV2Pair.js"></script>
+	<script src="src/abi/Router.js"></script>
+	<script src="src/abi/XTime.js"></script>
 	<script src="src/js/init.js"></script>
 	<script src="src/js/wallet.js"></script>
 	<script src="src/js/swap.js"></script>
 	<script src="src/js/main.js"></script>
+</div>
 </body>
 </html>

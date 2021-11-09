@@ -37,6 +37,17 @@ function initCountdownElements() {
 }
 
 function showAlert() {
-	$("#alert").alert();
 	$("#alert").removeClass("hide");
+	setTimeout(function () {
+		$("#alert").addClass("hide")
+	}, 3000)
+}
+
+function showSuccessInfo(title, body) {
+	$("#info-success-title").html(title);
+	$("#info-success-body").html(body);
+	$("#success-info").removeClass("hide");
+	setTimeout(function () {
+		$("#success-info").addClass("hide")
+	}, 3000)
 }

@@ -91,7 +91,8 @@ a:focus {
 	margin-left: 0;
 }
 
-#alert {
+#alert,
+#success-info {
 	position: fixed;
 	z-index: 2;
 	right: 20px;
