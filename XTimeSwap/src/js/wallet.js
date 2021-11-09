@@ -4,7 +4,8 @@ const PAIR_CONTRACT_ADDRESS = "0xbaBd4F4FC5667F8cac87DC6499F3e8f38f13B57A";
 const ROUTER_CONTRACT_ADDRESS = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
 let PAIR_CONTRACT;
 let ROUTER_CONTRACT;
-let XTIME_CONTRACT
+let XTIME_CONTRACT;
+let WBNB_CONTRACT;
 let XTIME_PRICE;
 
 function connectWallet() {
@@ -63,7 +64,8 @@ function getXTimeBalance(address) {
 function initContract() {
 	PAIR_CONTRACT = new web3.eth.Contract(IUniswapV2PairABI, PAIR_CONTRACT_ADDRESS);
 	ROUTER_CONTRACT = new web3.eth.Contract(RouterABI, ROUTER_CONTRACT_ADDRESS);
-	XTIME_CONTRACT = new web3.eth.Contract(XTimeABI, XTIME_CONTRACT_ADDRESS)
+	XTIME_CONTRACT = new web3.eth.Contract(XTimeABI, XTIME_CONTRACT_ADDRESS);
+	WBNB_CONTRACT = new web3.eth.Contract(WBNBABI, WBNB_CONTRACT_ADDRESS);
 }
 
 function testContract() {
@@ -80,7 +82,7 @@ async function swapBNBToXTime() {
 		Web3.utils.toHex(Web3.utils.toWei(SWAP_TO_VALUE.toString())),
 		[WBNB_CONTRACT_ADDRESS, XTIME_CONTRACT_ADDRESS],
 		CURRENT_ADDRESS,
-		Web3.utils.toHex(Math.round(Date.now() / 1000) + DEADLINE_TIME * 20),
+		Math.round(Date.now() / 1000) + DEADLINE_TIME,
 	);
 	console.log(data);
 
@@ -136,7 +138,7 @@ async function swapXTimeToBNB() {
 		amountOutMin.toString(),
 		[XTIME_CONTRACT_ADDRESS, WBNB_CONTRACT_ADDRESS],
 		CURRENT_ADDRESS,
-		Math.round(Date.now() / 1000) + DEADLINE_TIME * 20,
+		Math.round(Date.now() / 1000) + DEADLINE_TIME,
 	)
 
 	let rawSwapTransaction = {
@@ -160,6 +162,98 @@ async function swapXTimeToBNB() {
 				method: 'eth_sendTransaction',
 				params: [rawSwapTransaction],
 			});
+	} catch (error) {
+		return {
+			success: false,
+			status: "😥 Something went wrong: " + error.message
+		}
+	}
+}
+
+async function addLiquidity() {
+	let approveResponse = XTIME_CONTRACT.methods.approve(
+		ROUTER_CONTRACT_ADDRESS,
+		web3.utils.toWei((POLL_AMOUNT_XTIME * 2).toString())
+	);
+
+	console.log(web3.utils.toWei((POLL_AMOUNT_XTIME * 2).toString()))
+
+	let rawApproveTransaction = {
+		"from": CURRENT_ADDRESS,
+		"to": XTIME_CONTRACT_ADDRESS,
+		"value": web3.utils.toHex(0),
+		"data": approveResponse.encodeABI()
+	};
+
+	let approveBNBResponse = WBNB_CONTRACT.methods.approve(
+		ROUTER_CONTRACT_ADDRESS,
+		web3.utils.toWei((POLL_AMOUNT_BNB * 2).toString())
+	);
+
+	console.log(web3.utils.toWei((POLL_AMOUNT_BNB * 2).toString()))
+
+	let rawApproveBNBTransaction = {
+		"from": CURRENT_ADDRESS,
+		"to": WBNB_CONTRACT_ADDRESS,
+		"value": web3.utils.toHex(0),
+		"data": approveBNBResponse.encodeABI()
+	};
+
+	let BNBAmountOutMin = Web3.utils.toBN(Web3.utils.toWei(POLL_AMOUNT_XTIME.toString()));
+
+	let amountOutMin = BNBAmountOutMin.sub(BNBAmountOutMin.mul(Web3.utils.toBN(SLIPPAGE)).div(Web3.utils.toBN(100)));
+
+	let supplyData = ROUTER_CONTRACT.methods.addLiquidity(
+		WBNB_CONTRACT_ADDRESS,
+		XTIME_CONTRACT_ADDRESS,
+		Web3.utils.toWei(POLL_AMOUNT_BNB.toString()),
+		Web3.utils.toWei(POLL_AMOUNT_XTIME.toString()),
+		web3.utils.toHex(0),
+		web3.utils.toHex(0),
+		CURRENT_ADDRESS,
+		Math.round(Date.now() / 1000) + DEADLINE_TIME,
+	)
+
+	console.log(Web3.utils.toWei(POLL_AMOUNT_XTIME.toString()));
+	console.log(amountOutMin);
+	console.log(Web3.utils.toWei(POLL_AMOUNT_BNB.toString()))
+
+	let rawSupplyTransaction = {
+		"from": CURRENT_ADDRESS,
+		"to": ROUTER_CONTRACT_ADDRESS,
+		// "value": Web3.utils.toWei(POLL_AMOUNT_BNB.toString()),
+		"value": web3.utils.toHex(0),
+		"data": supplyData.encodeABI(),
+	};
+
+	console.log(Web3.utils.toWei(POLL_AMOUNT_BNB.toString()));
+
+	try {
+		const txApproveHash = await window.ethereum
+			.request({
+				method: 'eth_sendTransaction',
+				params: [rawApproveTransaction],
+			});
+
+		console.log(txApproveHash);
+
+		const txBNBApproveHash = await window.ethereum
+			.request({
+				method: 'eth_sendTransaction',
+				params: [rawApproveBNBTransaction],
+			});
+
+		console.log(txBNBApproveHash);
+
+		let approvalLimit = await XTIME_CONTRACT.methods.allowance(CURRENT_ADDRESS, ROUTER_CONTRACT_ADDRESS).call();
+
+		console.log(approvalLimit);
+		const txSwapHash = await window.ethereum
+			.request({
+				method: 'eth_sendTransaction',
+				params: [rawSupplyTransaction],
+			});
+		console.log(txSwapHash);
 	} catch (error) {
 		return {
 			success: false,

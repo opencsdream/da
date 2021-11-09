@@ -6,6 +6,8 @@ let SWAP_TO_VALUE = 0;
 let BNB_BALANCE = 0;
 let XTIME_BALANCE = 0;
 let CURRENT_ADDRESS;
+let POLL_AMOUNT_XTIME = 0;
+let POLL_AMOUNT_BNB = 0;
 
 function bindBtnEvents() {
 	$("#btn-swap").click(function () {
@@ -29,7 +31,6 @@ function bindBtnEvents() {
 		$("#pool-window").addClass("hide");
 		$("#stake-window").removeClass("hide");
 	});
-
 
 	// add Liquidity
 	$("#btn-join-poll").click(function () {
@@ -63,29 +64,18 @@ function bindBtnEvents() {
 
 		SWAP_TO_VALUE = $("#input-swap-to").val();
 		SWAP_FROM_VALUE = $("#input-swap-from").val();
+		showBalance();
 	})
 
 	// connect wallet
 	$("#btn-connect-wallet").click(function () {
-		connectWallet().then((web3) => {
-			window.web3 = web3;
-			if (web3.currentProvider.chainId !== "0x38") {
-				switchChain();
-			}
-			initContract();
-			CURRENT_ADDRESS = getCurrentAddress();
-			getBalance(CURRENT_ADDRESS).then(result => {
-				BNB_BALANCE = Web3.utils.fromWei(result)
-				$("#label-balance").html(`Balance: ${BNB_BALANCE}`);
-				$("#label-balance").removeClass("hide");
-			});
-			getXTimeBalance(CURRENT_ADDRESS).then(result => {
-				XTIME_BALANCE = Web3.utils.fromWei(result)
-			})
-			getXTimeToWBNBPrice();
-			setInterval(getXTimeToWBNBPrice, 5000)
-			connectWalletSuccess()
-		}).catch(error => {
+		connectWallet().then(connectedWallet).catch(error => {
+			console.log(error);
+		})
+	});
+
+	$("#btn-poll-connect-wallet").click(function () {
+		connectWallet().then(connectedWallet).catch(error => {
 			console.log(error);
 		})
 	});
@@ -115,43 +105,125 @@ function bindBtnEvents() {
 		}
 	})
 
+	// change the poll value
+	$("#input-poll-A").on("input", function () {
+		POLL_AMOUNT_BNB = $(this).val();
+		calculatePollXTimeNumber();
+		checkPollInputValue();
+	})
+
+	$("#input-poll-B").on("input", function () {
+		POLL_AMOUNT_XTIME = $(this).val();
+		calculatePollBNBNumber();
+		checkPollInputValue();
+	})
+
 	// confirm swap
-	$("#btn-confirm-swap").click(function (){
+	$("#btn-confirm-swap").click(function () {
 		if (SWAP_WAY === 1) {
 			swapBNBToXTime().then(() => {
-				showSuccessInfo("Swap Success!", "You transaction is on the way")
+				showSuccessInfo("Swap Success!", "You transaction is on the way");
 			});
 		} else {
 			swapXTimeToBNB().then(() => {
-				showSuccessInfo("Swap Success!", "You transaction is on the way")
+				showSuccessInfo("Swap Success!", "You transaction is on the way");
 			})
 		}
+	});
+
+	// confirm supply Liquidity
+	$("#btn-poll-confirm-supply").click(function () {
+		addLiquidity().then(() => {
+			showSuccessInfo("Supply Success!", "You transaction is on the way");
+		})
+	});
+}
+
+function connectedWallet(web3) {
+	window.web3 = web3;
+	if (web3.currentProvider.chainId !== "0x38") {
+		switchChain();
+	}
+	initContract();
+	CURRENT_ADDRESS = getCurrentAddress();
+
+	Promise.all([getBalance(CURRENT_ADDRESS), getXTimeBalance(CURRENT_ADDRESS)]).then((result) => {
+		BNB_BALANCE = Web3.utils.fromWei(result[0])
+		XTIME_BALANCE = Web3.utils.fromWei(result[1])
+		showBalance();
 	})
+
+	getXTimeToWBNBPrice();
+	setInterval(getXTimeToWBNBPrice, 5000)
+	connectWalletSuccess()
+}
+
+function showBalance() {
+	if (SWAP_WAY === 1) {
+		$("#label-balance-from").html(`Balance: ${BNB_BALANCE}`);
+		$("#label-balance-from").removeClass("hide");
+		$("#label-balance-to").html(`Balance: ${XTIME_BALANCE}`);
+		$("#label-balance-to").removeClass("hide");
+	} else {
+		$("#label-balance-from").html(`Balance: ${XTIME_BALANCE}`);
+		$("#label-balance-from").removeClass("hide");
+		$("#label-balance-to").html(`Balance: ${BNB_BALANCE}`);
+		$("#label-balance-to").removeClass("hide");
+	}
+
+	$("#label-poll-balance-A").html(`Balance: ${BNB_BALANCE}`);
+	$("#label-poll-balance-B").html(`Balance: ${XTIME_BALANCE}`);
 }
 
 function calculateSwapToNumber() {
 	if (SWAP_WAY === 1) {
-		return (SWAP_FROM_VALUE * XTIME_PRICE).toFixed(18);
+		return SWAP_FROM_VALUE === "" ? "" : (SWAP_FROM_VALUE * XTIME_PRICE).toFixed(18);
 	} else {
-		return (SWAP_FROM_VALUE / XTIME_PRICE).toFixed(18);
+		return SWAP_FROM_VALUE === "" ? "" : (SWAP_FROM_VALUE / XTIME_PRICE).toFixed(18);
 	}
 }
 
 function calculateSwapFromNumber() {
 	if (SWAP_WAY === 1) {
-		return SWAP_TO_VALUE / XTIME_PRICE;
+		return SWAP_TO_VALUE === "" ? "" : SWAP_TO_VALUE / XTIME_PRICE;
 	} else {
-		return SWAP_TO_VALUE * XTIME_PRICE;
+		return SWAP_TO_VALUE === "" ? "" : SWAP_TO_VALUE * XTIME_PRICE;
+	}
+}
+
+function calculatePollXTimeNumber() {
+	if (POLL_AMOUNT_BNB === "") {
+		POLL_AMOUNT_XTIME = "";
+	} else {
+		POLL_AMOUNT_XTIME = (POLL_AMOUNT_BNB * XTIME_PRICE).toFixed(18);
+	}
+	$("#input-poll-B").val(POLL_AMOUNT_XTIME);
+}
+
+function calculatePollBNBNumber() {
+	if (POLL_AMOUNT_XTIME === "") {
+		POLL_AMOUNT_BNB = "";
+	} else {
+		POLL_AMOUNT_BNB = (POLL_AMOUNT_XTIME / XTIME_PRICE).toFixed(18);
+	}
+	$("#input-poll-A").val(POLL_AMOUNT_BNB);
+}
+
+function checkPollInputValue() {
+	if (parseFloat(POLL_AMOUNT_BNB) > 0 && parseFloat(POLL_AMOUNT_XTIME) > 0 && parseFloat(POLL_AMOUNT_BNB) <= parseFloat(BNB_BALANCE) && parseFloat(POLL_AMOUNT_XTIME) <= parseFloat(XTIME_BALANCE)) {
+		$("#btn-poll-confirm-supply").attr("disabled", false);
+	} else {
+		$("#btn-poll-confirm-supply").attr("disabled", true);
 	}
 }
 
 function checkSwapInputValue() {
 	if (SWAP_FROM_VALUE > 0 && SWAP_TO_VALUE > 0) {
-		if (SWAP_WAY === 1 && SWAP_FROM_VALUE <= BNB_BALANCE) {
+		if (SWAP_WAY === 1 && parseFloat(SWAP_FROM_VALUE) <= parseFloat(BNB_BALANCE)) {
 			$("#btn-confirm-swap").attr("disabled", false);
 			$("#btn-confirm-swap").html("Swap");
 			return;
-		} else if (SWAP_WAY === 2 && SWAP_FROM_VALUE <= XTIME_BALANCE) {
+		} else if (SWAP_WAY === 2 && parseFloat(SWAP_FROM_VALUE) <= parseFloat(XTIME_BALANCE)) {
 			$("#btn-confirm-swap").attr("disabled", false);
 			$("#btn-confirm-swap").html("Swap");
 			return;
@@ -164,7 +236,9 @@ function checkSwapInputValue() {
 
 function connectWalletSuccess() {
 	$("#btn-connect-wallet").addClass("hide");
+	$("#btn-poll-connect-wallet").addClass("hide");
 	$("#btn-confirm-swap").removeClass("hide");
+	$("#btn-poll-confirm-supply").removeClass("hide");
 }
 
 function hidePageShowSwap() {
