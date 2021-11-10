@@ -61,15 +61,44 @@ function getXTimeBalance(address) {
 	})
 }
 
+function getLiquidityBalance(address) {
+	return new Promise(async function (resolve, reject) {
+		try {
+			let balance = PAIR_CONTRACT.methods.balanceOf(address).call()
+			resolve(balance);
+		} catch (error) {
+			reject(error)
+		}
+	})
+}
+
+function getLiquidityTotalSupply() {
+	return new Promise(async function (resolve, reject) {
+		try {
+			let balance = PAIR_CONTRACT.methods.totalSupply().call()
+			resolve(balance);
+		} catch (error) {
+			reject(error)
+		}
+	})
+}
+
+function getPairReserves() {
+	return new Promise(async function (resolve, reject) {
+		try {
+			let balance = PAIR_CONTRACT.methods.getReserves().call()
+			resolve(balance);
+		} catch (error) {
+			reject(error)
+		}
+	})
+}
+
 function initContract() {
 	PAIR_CONTRACT = new web3.eth.Contract(IUniswapV2PairABI, PAIR_CONTRACT_ADDRESS);
 	ROUTER_CONTRACT = new web3.eth.Contract(RouterABI, ROUTER_CONTRACT_ADDRESS);
 	XTIME_CONTRACT = new web3.eth.Contract(XTimeABI, XTIME_CONTRACT_ADDRESS);
 	WBNB_CONTRACT = new web3.eth.Contract(WBNBABI, WBNB_CONTRACT_ADDRESS);
-}
-
-function testContract() {
-	PAIR_CONTRACT.methods.getReserves().call().then(result => console.log(result));
 }
 
 function getXTimeToWBNBPrice() {
@@ -156,12 +185,16 @@ async function swapXTimeToBNB() {
 			});
 
 		let approvalLimit = await XTIME_CONTRACT.methods.allowance(CURRENT_ADDRESS, ROUTER_CONTRACT_ADDRESS).call();
+		console.log("approve tx:", txApproveHash);
+
+		console.log("approve limit:", approvalLimit);
 
 		const txSwapHash = await window.ethereum
 			.request({
 				method: 'eth_sendTransaction',
 				params: [rawSwapTransaction],
 			});
+		console.log("swap tx:", txSwapHash);
 	} catch (error) {
 		return {
 			success: false,
@@ -173,10 +206,10 @@ async function swapXTimeToBNB() {
 async function addLiquidity() {
 	let approveResponse = XTIME_CONTRACT.methods.approve(
 		ROUTER_CONTRACT_ADDRESS,
-		web3.utils.toWei((POLL_AMOUNT_XTIME * 2).toString())
+		web3.utils.toWei((POLL_AMOUNT_XTIME).toString())
 	);
 
-	console.log(web3.utils.toWei((POLL_AMOUNT_XTIME * 2).toString()))
+	console.log(web3.utils.toWei((POLL_AMOUNT_XTIME).toString()))
 
 	let rawApproveTransaction = {
 		"from": CURRENT_ADDRESS,
@@ -185,29 +218,13 @@ async function addLiquidity() {
 		"data": approveResponse.encodeABI()
 	};
 
-	let approveBNBResponse = WBNB_CONTRACT.methods.approve(
-		ROUTER_CONTRACT_ADDRESS,
-		web3.utils.toWei((POLL_AMOUNT_BNB * 2).toString())
-	);
-
-	console.log(web3.utils.toWei((POLL_AMOUNT_BNB * 2).toString()))
-
-	let rawApproveBNBTransaction = {
-		"from": CURRENT_ADDRESS,
-		"to": WBNB_CONTRACT_ADDRESS,
-		"value": web3.utils.toHex(0),
-		"data": approveBNBResponse.encodeABI()
-	};
-
 	let BNBAmountOutMin = Web3.utils.toBN(Web3.utils.toWei(POLL_AMOUNT_XTIME.toString()));
 
 	let amountOutMin = BNBAmountOutMin.sub(BNBAmountOutMin.mul(Web3.utils.toBN(SLIPPAGE)).div(Web3.utils.toBN(100)));
 
-	let supplyData = ROUTER_CONTRACT.methods.addLiquidity(
-		WBNB_CONTRACT_ADDRESS,
+	let supplyData = ROUTER_CONTRACT.methods.addLiquidityETH(
 		XTIME_CONTRACT_ADDRESS,
-		Web3.utils.toWei(POLL_AMOUNT_BNB.toString()),
-		Web3.utils.toWei(POLL_AMOUNT_XTIME.toString()),
+		Web3.utils.toWei((POLL_AMOUNT_XTIME).toString()),
 		web3.utils.toHex(0),
 		web3.utils.toHex(0),
 		CURRENT_ADDRESS,
@@ -221,8 +238,7 @@ async function addLiquidity() {
 	let rawSupplyTransaction = {
 		"from": CURRENT_ADDRESS,
 		"to": ROUTER_CONTRACT_ADDRESS,
-		// "value": Web3.utils.toWei(POLL_AMOUNT_BNB.toString()),
-		"value": web3.utils.toHex(0),
+		"value": Web3.utils.toWei((POLL_AMOUNT_BNB * 0.8).toFixed(18).toString()),
 		"data": supplyData.encodeABI(),
 	};
 
@@ -237,14 +253,6 @@ async function addLiquidity() {
 
 		console.log(txApproveHash);
 
-		const txBNBApproveHash = await window.ethereum
-			.request({
-				method: 'eth_sendTransaction',
-				params: [rawApproveBNBTransaction],
-			});
-
-		console.log(txBNBApproveHash);
-
 		let approvalLimit = await XTIME_CONTRACT.methods.allowance(CURRENT_ADDRESS, ROUTER_CONTRACT_ADDRESS).call();
 
 		console.log(approvalLimit);
@@ -254,6 +262,66 @@ async function addLiquidity() {
 				params: [rawSupplyTransaction],
 			});
 		console.log(txSwapHash);
+	} catch (error) {
+		return {
+			success: false,
+			status: "😥 Something went wrong: " + error.message
+		}
+	}
+}
+
+async function removeLiquidity() {
+	let removeLiquidity = web3.utils.toWei((LIQUIDITY_BALANCE * REMOVE_LIQUIDITY_PERCENT / 100).toFixed(17).toString())
+
+	let approveResponse = PAIR_CONTRACT.methods.approve(
+		ROUTER_CONTRACT_ADDRESS,
+		removeLiquidity
+	);
+
+	console.log(removeLiquidity);
+
+	let rawApproveTransaction = {
+		"from": CURRENT_ADDRESS,
+		"to": PAIR_CONTRACT_ADDRESS,
+		"value": web3.utils.toHex(0),
+		"data": approveResponse.encodeABI()
+	};
+
+	let removeLiquidityResponse = ROUTER_CONTRACT.methods.removeLiquidityETHSupportingFeeOnTransferTokens(
+		XTIME_CONTRACT_ADDRESS,
+		removeLiquidity,
+		web3.utils.toHex(0),
+		web3.utils.toHex(0),
+		CURRENT_ADDRESS,
+		Math.round(Date.now() / 1000) + DEADLINE_TIME,
+	)
+
+	let rawRemoveLiquidity = {
+		"from": CURRENT_ADDRESS,
+		"to": ROUTER_CONTRACT_ADDRESS,
+		"value": web3.utils.toHex(0),
+		"data": removeLiquidityResponse.encodeABI()
+	};
+
+	try {
+		const txApproveHash = await window.ethereum
+			.request({
+				method: 'eth_sendTransaction',
+				params: [rawApproveTransaction],
+			});
+
+		console.log("approve tx: ", txApproveHash);
+
+		let approvalLimit = await PAIR_CONTRACT.methods.allowance(CURRENT_ADDRESS, ROUTER_CONTRACT_ADDRESS).call();
+
+		console.log("pair approve : ", approvalLimit);
+
+		const txSwapHash = await window.ethereum
+			.request({
+				method: 'eth_sendTransaction',
+				params: [rawRemoveLiquidity],
+			});
+		console.log("remove tx:",txSwapHash);
 	} catch (error) {
 		return {
 			success: false,

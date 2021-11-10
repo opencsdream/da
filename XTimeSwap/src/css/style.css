@@ -350,11 +350,9 @@ input[type="number"] {
 	text-align: center;
 }
 
-.poll-body {
-	padding: 24px;
-}
-
-.poll-add {
+.poll-body,
+.poll-add,
+.poll-remove {
 	padding: 24px;
 }
 
@@ -406,6 +404,61 @@ input[type="number"] {
 	font-weight: 400;
 	line-height: 1.5;
 	font-size: 14px;
+}
+
+.poll-body-liquidity-box {
+	width: 100%;
+	margin: 20px auto;
+	padding: 20px;
+	color: white;
+	border-radius: 16px;
+	background-color: rgba(0, 0, 0, 0.6);
+	box-shadow: rgb(74 74 104 / 10%) 0px 2px 2px -1px inset;
+}
+
+.liquidity-title {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.liquidity-title img {
+	width: 26px;
+	border-radius: 13px;
+}
+
+.liquidity-title h5 {
+	color: white;
+	margin-bottom: 0;
+}
+
+.liquidity-detail {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+#liquidity-balance {
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+
+.liquidity-detail p {
+	margin-bottom: 0;
+}
+
+#btn-remove-liquidity {
+	margin-top: 20px;
+}
+
+.remove-liquidity-buttons {
+	display: flex;
+	justify-content: space-around;
+	padding-bottom: 20px;
+}
+
+#input-poll-liquidity {
+	width: 320px;
 }
 
 .stake-title {

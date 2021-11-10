@@ -47,9 +47,8 @@
 					<img src="../img/countdown/top.jpg" class="col-md-8 offset-md-2 col-12">
 				</div>
 				<div class="row">
-					<img src="../img/countdown/LOGO XTime.png" class="col-md-3 offset-md-3 col-6 ">
-					<div class="col-md-6 col-6" style="text-align: left; display: flex; align-items: center;">
-						<p style="margin-top: 20px;">IS COMING</p>
+					<div class="col-md-12 col-12" style="text-align: center; align-items: center;">
+						<p style="margin-top: 20px;">XTIME STAKE IS COMING</p>
 					</div>
 				</div>
 
@@ -68,7 +67,7 @@
 					</div>
 				</div>
 				<div class="final-day">
-					<p>14:00 November 10 2021 UTC</p>
+					<p>14:00 November 20 2021 UTC</p>
 				</div>
 			</div>
 		</div>
@@ -169,7 +168,6 @@
 							<p class="swap-notes-label">Liquidity Provider Fee</p>
 							<p id="swap-notes-fee">0.555 BNB</p>
 						</div>
-
 					</div>
 				</div>
 				<div class="window" id="pool-window">
@@ -193,6 +191,29 @@
 							</div>
 							<div class="poll-body-content">
 								<p class="poll-body-content-detail">Connect to a wallet to view your liquidity.</p>
+								<div class="poll-body-liquidity-box hide">
+									<div class="liquidity-title">
+										<div>
+											<img src="assets/icon/bnb.png">
+											<img src="assets/icon/xtime.png">
+										</div>
+										<h5>BNB/XTime</h5>
+									</div>
+									<p id="liquidity-balance">Loading</p>
+									<div class="liquidity-detail">
+										<div class="liquidity-label">Pooled BNB</div>
+										<p id="liquidity-balance-bnb">Loading</p>
+									</div>
+									<div class="liquidity-detail">
+										<div class="liquidity-label">Pooled XTime</div>
+										<p id="liquidity-balance-xtime">Loading</p>
+									</div>
+									<div class="liquidity-detail">
+										<div class="liquidity-label">Share of pool</div>
+										<p id="liquidity-balance-sharing">Loading</p>
+									</div>
+									<button class="btn btn-lg btn-primary swap-wallet" id="btn-remove-liquidity">Remove</button>
+								</div>
 							</div>
 							<div>
 								<span class="poll-body-info">If you staked your LP tokens, unstake them to see them here.</span>
@@ -243,6 +264,53 @@
 							</button>
 						</div>
 					</div>
+					<div class="window-body hide" id="window-body-poll-remove">
+						<div class="poll-remove">
+							<div class="poll-add-title">
+								<i class="bi bi-arrow-left" id="btn-poll-remove-back"></i>
+								<p>
+									Remove Liquidity
+								</p>
+							</div>
+
+							<div class="swap-input">
+								<p class="input-label">Input</p>
+								<p class="input-label float-right hide" id="label-poll-balance-liquidity"></p>
+								<div class="input-body">
+									<input class="token-amount-input" id="input-poll-liquidity" inputmode="decimal"
+										   autocorrect="off" type="number" pattern="^[0-9]*[.,]?[0-9]*$"
+										   placeholder="0.0"
+										   minlength="1" maxlength="79">
+									<button class="open-currency-select-button">
+										%
+									</button>
+								</div>
+								<div class="form-item remove-liquidity-buttons">
+									<button class="btn-percent" id="remove-liquidity-btn-percent-25">25%</button>
+									<button class="btn-percent" id="remove-liquidity-btn-percent-50">50%</button>
+									<button class="btn-percent" id="remove-liquidity-btn-percent-75">75%</button>
+									<button class="btn-percent" id="remove-liquidity-btn-percent-100">100%</button>
+								</div>
+							</div>
+
+							<div style="text-align: center; color: white">
+								You will get
+							</div>
+
+							<div class="poll-body-liquidity-box">
+								<div class="liquidity-detail">
+									<div class="liquidity-label">BNB</div>
+									<p id="liquidity-get-balance-bnb">0.0</p>
+								</div>
+								<div class="liquidity-detail">
+									<div class="liquidity-label">XTime</div>
+									<p id="liquidity-get-balance-xtime">0.0</p>
+								</div>
+							</div>
+
+							<button class="btn btn-lg btn-primary swap-wallet" id="btn-confirm-remove-liquidity" disabled>Remove</button>
+						</div>
+					</div>
 				</div>
 				<div id="stake-window">
 					<div class="stake-title">XTime FARMS</div>
@@ -262,11 +330,11 @@
 							</div>
 							<div class="stake-detail-item">
 								<p class="detail-item-title color-white">APR</p>
-								<p class="detail-item-info color-white">150.00%</p>
+								<p class="detail-item-info color-white">Loading...</p>
 							</div>
 							<div class="stake-detail-item">
 								<p class="detail-item-title color-white">Total Staked</p>
-								<p class="detail-item-info color-white">483,929.00 USD</p>
+								<p class="detail-item-info color-white">Loading...</p>
 							</div>
 							<div class="stake-detail-item detail-btn">
 								Details
@@ -305,11 +373,11 @@
 							</div>
 							<div class="stake-detail-item">
 								<p class="detail-item-title color-white">APR</p>
-								<p class="detail-item-info color-white">150.00%</p>
+								<p class="detail-item-info color-white">Loading...</p>
 							</div>
 							<div class="stake-detail-item">
 								<p class="detail-item-title color-white">Total Staked</p>
-								<p class="detail-item-info color-white">483,929.00 USD</p>
+								<p class="detail-item-info color-white">Loading...</p>
 							</div>
 							<div class="stake-detail-item detail-btn">
 								Details

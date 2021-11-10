@@ -16,7 +16,7 @@ function intervalChangeBackground() {
 */
 function initCountdownElements() {
 	var now = new Date();
-	var finaldate = new Date("NOV 10 2021 14:00 UTC ");
+	var finaldate = new Date("NOV 20 2021 14:00 UTC ");
 	var countTo = finaldate.getTime() - now.getTime() + now.valueOf();
 	$(".timer").countdown(countTo, function (event) {
 		var $this = $(this);

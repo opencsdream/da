@@ -4,10 +4,14 @@ let SLIPPAGE = 20;
 let SWAP_FROM_VALUE = 0;
 let SWAP_TO_VALUE = 0;
 let BNB_BALANCE = 0;
+let LIQUIDITY_BALANCE = 0;
+let LIQUIDITY_TOTAL = 0;
+let PAIR_RESERVES;
 let XTIME_BALANCE = 0;
 let CURRENT_ADDRESS;
 let POLL_AMOUNT_XTIME = 0;
 let POLL_AMOUNT_BNB = 0;
+let REMOVE_LIQUIDITY_PERCENT = 0;
 
 function bindBtnEvents() {
 	$("#btn-swap").click(function () {
@@ -137,6 +141,80 @@ function bindBtnEvents() {
 			showSuccessInfo("Supply Success!", "You transaction is on the way");
 		})
 	});
+
+	// remove liquidity
+	$("#btn-remove-liquidity").click(function () {
+		$("#window-body-poll-liquidity").addClass("hide");
+		$("#window-body-poll-remove").removeClass("hide");
+	})
+
+	$("#btn-poll-remove-back").click(function () {
+		$("#window-body-poll-liquidity").removeClass("hide");
+		$("#window-body-poll-remove").addClass("hide");
+	})
+
+	// input remove liquidity value
+	$("#remove-liquidity-btn-percent-25").click(function () {
+		REMOVE_LIQUIDITY_PERCENT = 25;
+		$("#input-poll-liquidity").val(REMOVE_LIQUIDITY_PERCENT);
+		showLiquidityPay();
+	})
+
+	$("#remove-liquidity-btn-percent-50").click(function () {
+		REMOVE_LIQUIDITY_PERCENT = 50;
+		$("#input-poll-liquidity").val(REMOVE_LIQUIDITY_PERCENT);
+		showLiquidityPay();
+	})
+
+	$("#remove-liquidity-btn-percent-75").click(function () {
+		REMOVE_LIQUIDITY_PERCENT = 75;
+		$("#input-poll-liquidity").val(REMOVE_LIQUIDITY_PERCENT);
+		showLiquidityPay();
+	})
+
+	$("#remove-liquidity-btn-percent-100").click(function () {
+		REMOVE_LIQUIDITY_PERCENT = 100;
+		$("#input-poll-liquidity").val(REMOVE_LIQUIDITY_PERCENT);
+		showLiquidityPay();
+	})
+
+	$("#input-poll-liquidity").on("input", function () {
+		REMOVE_LIQUIDITY_PERCENT = $(this).val();
+		if (REMOVE_LIQUIDITY_PERCENT > 100) {
+			REMOVE_LIQUIDITY_PERCENT = 100;
+			$("#input-poll-liquidity").val(REMOVE_LIQUIDITY_PERCENT);
+		}
+
+		switch (Number(REMOVE_LIQUIDITY_PERCENT)) {
+		case 25:
+			$(".btn-percent").removeClass("active");
+			$("#remove-liquidity-btn-percent-25").addClass("active");
+			break;
+		case 50:
+			$(".btn-percent").removeClass("active");
+			$("#remove-liquidity-btn-percent-50").addClass("active");
+			break;
+		case 75:
+			$(".btn-percent").removeClass("active");
+			$("#remove-liquidity-btn-percent-75").addClass("active");
+			break;
+		case 100:
+			$(".btn-percent").removeClass("active");
+			$("#remove-liquidity-btn-percent-100").addClass("active");
+			break;
+		default:
+			$(".btn-percent").removeClass("active");
+		}
+
+		showLiquidityPay();
+	})
+
+	// confirm remove liquidity
+	$("#btn-confirm-remove-liquidity").click(function () {
+		removeLiquidity().then(() => {
+			showSuccessInfo("Remove Success!", "You transaction is on the way");
+		})
+	})
 }
 
 function connectedWallet(web3) {
@@ -147,15 +225,58 @@ function connectedWallet(web3) {
 	initContract();
 	CURRENT_ADDRESS = getCurrentAddress();
 
+	// get BNB and XTime balance
 	Promise.all([getBalance(CURRENT_ADDRESS), getXTimeBalance(CURRENT_ADDRESS)]).then((result) => {
 		BNB_BALANCE = Web3.utils.fromWei(result[0])
 		XTIME_BALANCE = Web3.utils.fromWei(result[1])
 		showBalance();
 	})
 
+	// get liquidity balance
+	Promise.all([getLiquidityTotalSupply(), getLiquidityBalance(CURRENT_ADDRESS), getPairReserves()]).then(result => {
+		LIQUIDITY_TOTAL = Web3.utils.fromWei(result[0]);
+		LIQUIDITY_BALANCE = Web3.utils.fromWei(result[1]);
+		PAIR_RESERVES = [
+			Web3.utils.fromWei(result[2].reserve0),
+			Web3.utils.fromWei(result[2].reserve1),
+		];
+		showLiquidityInfo();
+	})
+
 	getXTimeToWBNBPrice();
 	setInterval(getXTimeToWBNBPrice, 5000)
 	connectWalletSuccess()
+}
+
+function showLiquidityInfo() {
+	if (LIQUIDITY_BALANCE > 0) {
+		let info = calculateLiquidityInfo(1);
+		let sharing = info[2] > 0.00001 ? info[2].toFixed(12) : "<0.001%";
+		$("#liquidity-balance").html(LIQUIDITY_BALANCE);
+		$("#liquidity-balance-bnb").html(info[0].toFixed(12));
+		$("#liquidity-balance-xtime").html(info[1].toFixed(12));
+		$("#liquidity-balance-sharing").html(sharing);
+		$(".poll-body-content-detail").addClass("hide");
+		$(".poll-body-liquidity-box").removeClass("hide");
+	}
+}
+
+function showLiquidityPay() {
+	if (REMOVE_LIQUIDITY_PERCENT > 0) {
+		let info = calculateLiquidityInfo(REMOVE_LIQUIDITY_PERCENT / 100);
+		$("#liquidity-get-balance-bnb").html(info[0].toFixed(12));
+		$("#liquidity-get-balance-xtime").html(info[1].toFixed(12));
+		$("#btn-confirm-remove-liquidity").attr("disabled", false);
+	} else {
+		$("#btn-confirm-remove-liquidity").attr("disabled", true);
+	}
+}
+
+function calculateLiquidityInfo(percent) {
+	let value = percent * LIQUIDITY_BALANCE;
+	let bnb = value / LIQUIDITY_TOTAL * PAIR_RESERVES[0];
+	let xtime = value / LIQUIDITY_TOTAL * PAIR_RESERVES[1];
+	return [bnb, xtime, value / LIQUIDITY_TOTAL];
 }
 
 function showBalance() {
